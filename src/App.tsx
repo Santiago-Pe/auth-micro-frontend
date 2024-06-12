@@ -1,13 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import { ErrorPage, Home, Login, Signup } from "./pages";
+import { Layout } from "./components";
 
 function App() {
   return (
     <Routes>
-      <Route index path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="*" element={<ErrorPage />} /> {/* Catch-all route */}
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+      </Route>
     </Routes>
   );
 }
