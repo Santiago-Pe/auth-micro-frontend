@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { ErrorPage, Home, Login, Signup } from "./pages";
+import { ErrorPage, Home } from "./pages";
 import { Layout } from "./components";
 
 function App() {
@@ -7,8 +7,6 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
       </Route>
     </Routes>
   );
