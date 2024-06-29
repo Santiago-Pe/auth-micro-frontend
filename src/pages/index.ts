@@ -1,3 +1,3 @@
-export { default as ErrorPage } from './error';
-export { default as Home } from './home';
-
+export { default as ErrorPage } from './error/errorPage';
+export { default as HomePage } from './home/homePage';
+export { default as AuthPage } from './auth/authPage';

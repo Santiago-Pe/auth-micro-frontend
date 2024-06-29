@@ -1,18 +1,21 @@
-import { FC } from "react";
+import React, { FC, lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
+import { Loader } from "../../components";
 
-// Define the component with the FC (Function Component) type
+const Header = lazy(() => import("../header/header"));
+const Footer = lazy(() => import("../footer/footer"));
+
 const Layout: FC = () => {
   return (
-    <div className="layout font-sans h-screen ">
-      <header className="layout-header"></header>
-      <main className="flex flex-col justify-center h-full">
-        <Outlet />
-      </main>
-      <footer className="layout-footer">
-        {/* <p>&copy; 2023 My Application</p> */}
-      </footer>
-    </div>
+    <Suspense fallback={<Loader />}>
+      <div className="layout font-sans h-screen">
+        <Header />
+        <main className="flex flex-col justify-center h-full">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </Suspense>
   );
 };
 
