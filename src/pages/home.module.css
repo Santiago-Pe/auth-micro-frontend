@@ -14,29 +14,6 @@
   margin: auto;
 }
 
-/* .container p {
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0.3px;
-  margin: 20px 0;
-}
-
-.container span {
-  font-size: 12px;
-}
-
-.container a {
-  color: #333;
-  font-size: 13px;
-  text-decoration: none;
-  margin: 15px 0 10px;
-}
-
-.container button.hidden {
-  background-color: transparent;
-  border-color: #fff;
-} */
-
 .signIn {
   left: 0;
   width: 50%;
@@ -72,21 +49,6 @@
     opacity: 1;
     z-index: 5;
   }
-}
-
-.socialIcons {
-  margin: 20px 0;
-}
-
-.socialIcons a {
-  border: 1px solid #ccc;
-  border-radius: 20%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 3px;
-  width: 40px;
-  height: 40px;
 }
 
 .toggleContainer {
