@@ -5,8 +5,8 @@ import { Outlet } from "react-router-dom";
 const Layout: FC = () => {
   return (
     <div className="layout font-sans h-screen ">
-      <header className="layout-header">{/* <h1>My Application</h1> */}</header>
-      <main className="layout-content">
+      <header className="layout-header"></header>
+      <main className="flex flex-col justify-center h-full">
         <Outlet />
       </main>
       <footer className="layout-footer">
