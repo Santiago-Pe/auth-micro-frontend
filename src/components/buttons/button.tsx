@@ -1,15 +1,17 @@
-import { FC } from "react";
+import React, { FC } from "react";
 
 interface ButtonProps {
   text: string;
+  type?: "submit" | "reset" | "button"; // Update type to accept specific values
   secondary?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   loading?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
   text,
+  type = "button", // Default to "button" type if not specified
   secondary = false,
   onClick,
   disabled = false,
@@ -26,6 +28,7 @@ const Button: FC<ButtonProps> = ({
       }`}
       onClick={onClick}
       disabled={disabled}
+      type={type} // Use the typed prop here
     >
       {!loading ? (
         text
