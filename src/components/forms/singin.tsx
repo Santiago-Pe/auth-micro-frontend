@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import { useForm } from "react-hook-form";
-import { Input } from "../inputs";
+import { FormInput } from "../inputs";
 import { Button } from "../buttons";
 
 interface SignInFormData {
   userName: string;
   password: string;
+  [key: string]: unknown; // Firma de índice que permite cualquier otra clave
 }
-
 interface SignInProps {
   customClass?: string;
 }
@@ -33,31 +33,28 @@ const SignIn: FC<SignInProps> = ({ customClass }) => {
       >
         <h1 className="text-xl text-center font-bold mb-4">Sign In</h1>
 
-        {/* Campo de Usuario */}
-        <Input
-          name="userName"
-          placeholder="User name"
+        <FormInput<SignInFormData>
+          id="userName"
           type="text"
-          register={{
-            ...register("userName", {
-              required: "Username is required",
-            }),
-          }}
+          name="userName"
+          label="User Name"
+          placeholder="User Name"
+          className="mb-2"
+          register={register}
+          rules={{ required: "You must enter your user name." }}
+          errors={errors}
         />
-
-        {/* Campo de Contraseña */}
-        <Input
-          name="password"
-          placeholder="Password"
+        <FormInput<SignInFormData>
+          id="password"
           type="password"
-          register={{
-            ...register("password", {
-              required: "Password is required",
-            }),
-          }}
+          name="password"
+          label="Password"
+          placeholder="Password"
+          className="mb-2"
+          register={register}
+          rules={{ required: "You must enter your password." }}
+          errors={errors}
         />
-
-        {/* Botón de Enviar */}
         <Button text="Sign in" type="submit" />
       </form>
     </div>

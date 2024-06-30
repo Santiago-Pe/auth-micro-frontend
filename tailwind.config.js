@@ -7,6 +7,7 @@ export default {
       white: "#fff",
       gray: "#e5e7eb",
       violet: "#4c1d95",
+      red: "#dc2626",
     },
     extend: {
       transitionDuration: {
@@ -15,6 +16,7 @@ export default {
       transitionProperty: {
         width: "width",
         transform: "transform",
+        colors: "colors",
       },
       transitionTimingFunction: {
         "in-out": "ease-in-out",

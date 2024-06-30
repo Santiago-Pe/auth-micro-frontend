@@ -1,51 +1,65 @@
-import React from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import React, {
+  FC,
+  forwardRef,
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+} from "react";
+import { combineClasses } from "../../helpers/helpers";
 
-interface InputProps extends Partial<UseFormRegisterReturn> {
+export type InputSize = "medium" | "large";
+export type InputType = "text" | "email" | "password";
+
+export type InputProps = {
+  id: string;
   name: string;
   label?: string;
-  errors?: any;
-  placeholder?: string;
-  required?: boolean;
-  register: any;
-  type: string;
-  validationSchema?: any; // Puedes ajustar el tipo según tu esquema de validación
-}
+  type?: InputType;
+  size?: InputSize;
+  className?: string;
+} & Omit<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+  "size"
+>;
 
-const Input: React.FC<InputProps> = ({
-  name,
-  label,
-  register,
-  errors,
-  required = false,
-  type,
-  placeholder,
-  validationSchema,
-}) => {
-  return (
-    <div className="form-control-input">
-      {label && (
-        <label htmlFor={name}>
-          {label}
-          {required && "*"}
-        </label>
-      )}
-      <input
-        className="bg-gray border-none my-2 py-2.5 px-4 text-sm rounded-lg w-full outline-none"
-        id={name}
-        name={name}
-        placeholder={placeholder}
-        type={type}
-        {...register(name, validationSchema)}
-      />
-      {errors && errors[name]?.type === "required" && (
-        <span className="error">{errors[name]?.message}</span>
-      )}
-      {errors && errors[name]?.type === "minLength" && (
-        <span className="error">{errors[name]?.message}</span>
-      )}
-    </div>
-  );
+const sizeMap: { [key in InputSize]: string } = {
+  medium: "py-2.5 px-4 text-sm",
+  large: "py-3 px-5 text-base",
 };
+
+const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      id,
+      name,
+      label,
+      type = "text",
+      size = "medium",
+      className = "",
+      placeholder,
+      ...props
+    },
+    ref
+  ) => {
+    const inputClasses = combineClasses(
+      "bg-gray border-gray",
+      sizeMap[size],
+      "rounded-lg w-full",
+      className
+    );
+
+    return (
+      <input
+        id={id}
+        ref={ref}
+        name={name}
+        type={type}
+        aria-label={label}
+        placeholder={placeholder}
+        className={inputClasses}
+        {...props}
+      />
+    );
+  }
+);
 
 export default Input;

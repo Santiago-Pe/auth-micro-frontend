@@ -1,7 +1,7 @@
 import React from "react";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
-import { Input } from "../inputs";
+import { FormInput, Input } from "../inputs";
 import { Button } from "../buttons";
 
 interface SignupFormData {
@@ -9,6 +9,7 @@ interface SignupFormData {
   email: string;
   userName: string;
   password: string;
+  [key: string]: unknown;
 }
 
 interface SignupProps {
@@ -36,53 +37,46 @@ const Signup: FC<SignupProps> = ({ customClass }) => {
       >
         <h1 className="text-xl text-center font-bold mb-4">Create Account</h1>
 
-        <Input
+        <FormInput<SignupFormData>
+          id="name"
+          type="text"
+          name="name"
           placeholder="Name"
-          type="text"
-          {...register("name", { required: "Name is required" })}
+          className="mb-2"
+          register={register}
+          rules={{ required: "You must enter your name." }}
+          errors={errors}
         />
-        {errors.name && (
-          <span className="text-red-500">{errors.name.message}</span>
-        )}
-
-        <Input
-          placeholder="Email"
+        <FormInput<SignupFormData>
+          id="email"
           type="email"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Invalid email address",
-            },
-          })}
+          name="email"
+          placeholder="Email"
+          className="mb-2"
+          register={register}
+          rules={{ required: "You must enter your email." }}
+          errors={errors}
         />
-        {errors.email && (
-          <span className="text-red-500">{errors.email.message}</span>
-        )}
-
-        <Input
-          placeholder="User name"
+        <FormInput<SignupFormData>
+          id="userName"
           type="text"
-          {...register("userName", { required: "Username is required" })}
+          name="userName"
+          placeholder="User Name"
+          className="mb-2"
+          register={register}
+          rules={{ required: "You must enter your user name." }}
+          errors={errors}
         />
-        {errors.userName && (
-          <span className="text-red-500">{errors.userName.message}</span>
-        )}
-
-        <Input
-          placeholder="Password"
+        <FormInput<SignupFormData>
+          id="password"
           type="password"
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 6,
-              message: "Password must be at least 6 characters long",
-            },
-          })}
+          name="password"
+          placeholder="Password"
+          className="mb-2"
+          register={register}
+          rules={{ required: "You must enter your password" }}
+          errors={errors}
         />
-        {errors.password && (
-          <span className="text-red-500">{errors.password.message}</span>
-        )}
 
         <Button text="Sign up" type="submit" />
       </form>
