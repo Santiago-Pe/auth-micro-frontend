@@ -1,7 +1,6 @@
-import React from "react";
-import { FC } from "react";
+import React, { FC } from "react";
 import { useForm } from "react-hook-form";
-import { FormInput, Input } from "../inputs";
+import { FormInput } from "../inputs";
 import { Button } from "../buttons";
 
 interface SignupFormData {
