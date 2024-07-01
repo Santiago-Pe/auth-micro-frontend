@@ -34,7 +34,7 @@ const FormInput = <TFormValues extends Record<string, unknown>>({
   const hasError = !!(errors && errorMessages);
 
   return (
-    <div className={`relative ${className} my-2`} aria-live="polite">
+    <div className={`relative ${className} my-2 w-full`} aria-live="polite">
       {/* Renderizamos el componente Input */}
       <Input
         name={name} // Propiedad 'name' del input
