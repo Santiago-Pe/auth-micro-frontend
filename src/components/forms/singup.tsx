@@ -2,6 +2,8 @@ import React, { FC } from "react";
 import { useForm } from "react-hook-form";
 import { FormInput } from "../inputs";
 import { Button } from "../buttons";
+import { useSignup } from "../../hooks/auth/useAuth";
+import useUserStore from "../../store/user.store";
 
 interface SignupFormData {
   name: string;
@@ -13,19 +15,36 @@ interface SignupFormData {
 
 interface SignupProps {
   customClass?: string;
+  callback: () => void;
 }
 
-const Signup: FC<SignupProps> = ({ customClass }) => {
+const Signup: FC<SignupProps> = ({ customClass, callback }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignupFormData>();
 
-  const onSubmit = (data: SignupFormData) => {
-    console.log(data); // Aquí puedes manejar la lógica de enviar los datos al servidor
+  const { signup, isLoading, isSuccess, isError } = useSignup();
+  const { setUser, user } = useUserStore();
+  const onSubmit = async (data: SignupFormData) => {
+    try {
+      const response = await signup(
+        data.name,
+        data.email,
+        data.userName,
+        data.password
+      );
+
+      setUser({ ...user, userName: response.userName });
+
+      if (callback) callback();
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
   };
 
+  // En este componente voy a usar los estados de mi mutation
   return (
     <div
       className={`absolute h-full top-0 transition-all duration-600 ease-in-out ${customClass}`}
@@ -77,7 +96,7 @@ const Signup: FC<SignupProps> = ({ customClass }) => {
           errors={errors}
         />
 
-        <Button text="Sign up" type="submit" />
+        <Button text="Sign up" type="submit" loading={isLoading} />
       </form>
     </div>
   );

@@ -1,7 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormInput } from "../inputs";
 import { Button } from "../buttons";
+import useUserStore from "../../store/user.store";
 
 interface SignInFormData {
   userName: string;
@@ -17,12 +18,21 @@ const SignIn: FC<SignInProps> = ({ customClass }) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm<SignInFormData>();
+
+  const user = useUserStore((state) => state.user);
 
   const onSubmit = (data: SignInFormData) => {
     console.log(data); // Aquí puedes manejar la lógica de enviar los datos al servidor
   };
 
+  useEffect(() => {
+    if (user.userName !== "") {
+      setValue("userName", user.userName);
+    }
+  }, [user]);
   return (
     <div
       className={`absolute h-full top-0 transition-all duration-600 ease-in-out ${customClass}`}
@@ -34,7 +44,7 @@ const SignIn: FC<SignInProps> = ({ customClass }) => {
         <h1 className="text-xl text-center font-bold mb-4">Sign In</h1>
 
         <FormInput<SignInFormData>
-          id="userName"
+          id="signin-userName"
           type="text"
           name="userName"
           label="User Name"
@@ -45,7 +55,7 @@ const SignIn: FC<SignInProps> = ({ customClass }) => {
           errors={errors}
         />
         <FormInput<SignInFormData>
-          id="password"
+          id="signin-password"
           type="password"
           name="password"
           label="Password"

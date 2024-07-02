@@ -18,6 +18,7 @@ export type InputProps = {
   type?: InputType; // Tipo de input (por defecto será 'text')
   size?: InputSize; // Tamaño del input (por defecto será 'medium')
   className?: string; // Clases adicionales para estilizar el input
+  disabled?: boolean; // Para deshabilitar el componente cuando no se deba usar
 } & Omit<
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
   "size"
@@ -40,6 +41,7 @@ const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
       size = "medium",
       className = "",
       placeholder,
+      disabled,
       ...props
     },
     ref
@@ -61,6 +63,7 @@ const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
         aria-label={label} // Etiqueta accesible para el input
         placeholder={placeholder} // Placeholder del input
         className={inputClasses} // Clases combinadas para estilizar el input
+        disabled={disabled}
         {...props} // Resto de props pasadas al input (como event handlers)
       />
     );

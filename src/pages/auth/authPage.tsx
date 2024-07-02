@@ -17,7 +17,7 @@ const AuthPage: React.FC = () => {
         activePanel === "sign-up" ? styles.active : ""
       }`}
     >
-      <Signup customClass={styles.signUp} />
+      <Signup customClass={styles.signUp} callback={handleToggle} />
       <SignIn customClass={styles.signIn} />
 
       <div className={styles.toggleContainer}>

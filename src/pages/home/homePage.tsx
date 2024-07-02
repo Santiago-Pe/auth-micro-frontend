@@ -1,7 +1,18 @@
-import React, { FC } from "react";
-import { Link } from "react-router-dom";
+import React, { FC, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useUserStore from "../../store/user.store";
 
 const HomePage: FC = () => {
+  const user = useUserStore((state) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user.logged) {
+      navigate("/auth");
+      return;
+    }
+  }, []);
+
   return (
     <section className="flex items-center h-full p-16">
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">

@@ -1,38 +1,65 @@
 // src/context/AuthContext.tsx
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, ReactNode } from "react";
+import {
+  login,
+  signup,
+  verify,
+  LoginParams,
+  SignupParams,
+  VerifyParams,
+  LoginResponse,
+  SignupResponse,
+  VerifyResponse,
+} from "../../api/auth/authServices"; // Importamos las funciones y tipos de los servicios de autenticación
+import { UseMutationResult, useMutation } from "@tanstack/react-query"; // Importamos hook de mutación y tipo de resultado de mutación
 
-type AuthContextType = {
-  login: (username: string, password: string) => Promise<void>;
-  signup: (username: string, password: string) => Promise<void>;
-  verify: (token: string) => Promise<boolean>;
+// Define un tipo extendido que incluya isLoading, isSuccess, etc.
+type ExtendedMutationResult<TData, TError, TVariables> = UseMutationResult<
+  TData,
+  TError,
+  TVariables
+> & {
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
 };
 
+// Define el tipo para el contexto de autenticación
+type AuthContextType = {
+  loginMutation: ExtendedMutationResult<LoginResponse, Error, LoginParams>; // Resultado de la mutación para login
+  signupMutation: ExtendedMutationResult<SignupResponse, Error, SignupParams>; // Resultado de la mutación para signup
+  verifyMutation: ExtendedMutationResult<VerifyResponse, Error, VerifyParams>; // Resultado de la mutación para verify
+};
+
+// Creamos el contexto de autenticación
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC = ({ children }) => {
-  const [token, setToken] = useState<string | null>(null);
+// Proveedor de autenticación que envuelve la aplicación
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  // Hooks de mutación para cada operación de autenticación
+  const loginMutation = useMutation<LoginResponse, Error, LoginParams>({
+    mutationFn: login, // Función de mutación para login
+  });
+  const signupMutation = useMutation<SignupResponse, Error, SignupParams>({
+    mutationFn: signup, // Función de mutación para signup
+  });
+  const verifyMutation = useMutation<VerifyResponse, Error, VerifyParams>({
+    mutationFn: verify, // Función de mutación para verify
+  });
 
-  const login = async (username: string, password: string) => {
-    // Aquí deberías realizar la lógica de llamada a la API para iniciar sesión
-    // y almacenar el token en el estado o en localStorage
-  };
-
-  const signup = async (username: string, password: string) => {
-    // Aquí deberías realizar la lógica de llamada a la API para crear cuenta
-  };
-
-  const verify = async (token: string) => {
-    // Aquí deberías realizar la lógica de llamada a la API para verificar la cuenta
-    // Devuelve true si la verificación es exitosa, de lo contrario false
-  };
-
+  // Proporciona los hooks de mutación como valor del contexto
   return (
-    <AuthContext.Provider value={{ login, signup, verify }}>
-      {children}
+    <AuthContext.Provider
+      value={{ loginMutation, signupMutation, verifyMutation }}
+    >
+      {children} {/* Renderiza los componentes hijos */}
     </AuthContext.Provider>
   );
 };
 
+// Hook personalizado para consumir el contexto de autenticación
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
