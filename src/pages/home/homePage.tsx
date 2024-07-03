@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useUserStore from "../../store/user.store";
+import useUserStore from "../../store/user/user.store";
 
 const HomePage: FC = () => {
   const user = useUserStore((state) => state.user);

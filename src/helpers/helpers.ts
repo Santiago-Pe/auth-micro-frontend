@@ -8,4 +8,8 @@ export function customGet<T>(obj: any, path: string | string[], defaultValue?: T
   
   // Use reduce to traverse nested objects
   return paths.reduce((acc, key) => (acc && acc[key] !== 'undefined') ? acc[key] : defaultValue, obj);
-}
+} 
+
+export const storeToken = (token: string) => {
+  localStorage.setItem("token", token);
+};

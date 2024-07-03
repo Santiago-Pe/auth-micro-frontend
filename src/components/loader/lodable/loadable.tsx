@@ -1,9 +1,6 @@
-import React, { ComponentType, LazyExoticComponent, Suspense } from "react";
-import Loader from "./loader";
-
-interface LoadableProps {
-  component: LazyExoticComponent<ComponentType<any>>;
-}
+import React, { Suspense } from "react";
+import Loader from "../loader";
+import LoadableProps from "./lodable.interface";
 
 const Loadable: React.FC<LoadableProps> = ({
   component: Component,

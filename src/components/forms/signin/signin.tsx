@@ -1,8 +1,8 @@
 import React, { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FormInput } from "../inputs";
-import { Button } from "../buttons";
-import useUserStore from "../../store/user.store";
+import useUserStore from "../../../store/user/user.store";
+import { FormInput } from "../../inputs";
+import { Button } from "../../buttons";
 
 interface SignInFormData {
   userName: string;

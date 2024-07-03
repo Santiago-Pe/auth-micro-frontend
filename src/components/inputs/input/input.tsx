@@ -1,34 +1,7 @@
-import React, {
-  FC,
-  forwardRef,
-  DetailedHTMLProps,
-  InputHTMLAttributes,
-} from "react";
-import { combineClasses } from "../../helpers/helpers";
-
-// Definimos los tipos de tamaño y tipo de input que acepta nuestro componente
-export type InputSize = "medium" | "large";
-export type InputType = "text" | "email" | "password";
-
-// Definimos las propiedades que aceptará nuestro componente
-export type InputProps = {
-  id: string; // ID del input
-  name: string; // Nombre del input (utilizado para react-hook-form)
-  label?: string; // Etiqueta del input (opcional)
-  type?: InputType; // Tipo de input (por defecto será 'text')
-  size?: InputSize; // Tamaño del input (por defecto será 'medium')
-  className?: string; // Clases adicionales para estilizar el input
-  disabled?: boolean; // Para deshabilitar el componente cuando no se deba usar
-} & Omit<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  "size"
->;
-
-// Mapeo de clases para diferentes tamaños de input
-const sizeMap: { [key in InputSize]: string } = {
-  medium: "py-2.5 px-4 text-sm", // Clases para tamaño medium
-  large: "py-3 px-5 text-base", // Clases para tamaño large
-};
+import React, { FC, forwardRef } from "react";
+import { InputProps } from "./input.types";
+import { sizeMap } from "./input.constants";
+import { combineClasses } from "../../../helpers/helpers";
 
 // Componente funcional Input
 const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(

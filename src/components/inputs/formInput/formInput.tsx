@@ -1,23 +1,9 @@
 import React from "react";
-import {
-  RegisterOptions,
-  FieldErrors,
-  UseFormRegister,
-  Path,
-  FieldValues,
-} from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import Input, { InputProps } from "./input";
-import FormErrorMessage from "./formErrorMessage";
-import { customGet } from "../../helpers/helpers";
-
-// Definimos las props que acepta el componente FormInput
-export type FormInputProps<TFormValues extends FieldValues> = {
-  name: Path<TFormValues>; // Nombre del campo en el formulario
-  rules?: RegisterOptions<TFormValues, Path<TFormValues>>; // Reglas de validación del campo
-  register?: UseFormRegister<TFormValues>; // Función de registro del campo en react-hook-form
-  errors?: FieldErrors<TFormValues>; // Errores de validación asociados al campo
-} & Omit<InputProps, "name">; // Resto de props para el componente Input, excluyendo 'name'
+import { Input } from "../input";
+import { customGet } from "../../../helpers/helpers";
+import { FormErrorMessage } from "../formErrorMessage";
+import { FormInputProps } from "./formInput.types";
 
 // Componente FormInput
 const FormInput = <TFormValues extends Record<string, unknown>>({

@@ -1,35 +1,15 @@
-// src/context/AuthContext.tsx
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, ReactNode, useContext } from "react";
+import { useMutation } from "@tanstack/react-query"; // Importamos hook de mutación
+import { login, signup, verify } from "../../api/auth/authServices"; // Importamos las funciones de los servicios de autenticación
+import { AuthContextType } from "./authContext.types"; // Importamos los tipos del contexto de autenticación
 import {
-  login,
-  signup,
-  verify,
   LoginParams,
-  SignupParams,
-  VerifyParams,
   LoginResponse,
+  SignupParams,
   SignupResponse,
+  VerifyParams,
   VerifyResponse,
-} from "../../api/auth/authServices"; // Importamos las funciones y tipos de los servicios de autenticación
-import { UseMutationResult, useMutation } from "@tanstack/react-query"; // Importamos hook de mutación y tipo de resultado de mutación
-
-// Define un tipo extendido que incluya isLoading, isSuccess, etc.
-type ExtendedMutationResult<TData, TError, TVariables> = UseMutationResult<
-  TData,
-  TError,
-  TVariables
-> & {
-  isLoading: boolean;
-  isSuccess: boolean;
-  isError: boolean;
-};
-
-// Define el tipo para el contexto de autenticación
-type AuthContextType = {
-  loginMutation: ExtendedMutationResult<LoginResponse, Error, LoginParams>; // Resultado de la mutación para login
-  signupMutation: ExtendedMutationResult<SignupResponse, Error, SignupParams>; // Resultado de la mutación para signup
-  verifyMutation: ExtendedMutationResult<VerifyResponse, Error, VerifyParams>; // Resultado de la mutación para verify
-};
+} from "../../api/auth/authTypes";
 
 // Creamos el contexto de autenticación
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -59,7 +39,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-// Hook personalizado para consumir el contexto de autenticación
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -67,3 +46,5 @@ export const useAuth = () => {
   }
   return context;
 };
+
+export default AuthContext;

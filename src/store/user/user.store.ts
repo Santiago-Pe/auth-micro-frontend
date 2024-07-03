@@ -1,12 +1,8 @@
 // userStore.ts
 import {create} from 'zustand';
+import UserStoreState from './user.store.interface';
 import User from './user.interface';
 
-interface UserStoreState {
-  user: User;
-  setUser: (payload: User) => void;
-  removeUser: () => void;
-}
 
 const initialState: User = {
   email: '',
@@ -20,7 +16,7 @@ const initialState: User = {
 const useUserStore = create<UserStoreState>((set) => ({
   user: initialState,
   setUser: (payload: Partial<User>) => set((state) => ({
-    user: { ...state.user, ...payload }, // Actualiza solo los campos proporcionados en payload
+    user: { ...state.user, ...payload }, 
   })),
   removeUser: () => set({ user: initialState }),
 }));
