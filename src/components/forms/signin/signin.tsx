@@ -3,29 +3,57 @@ import { useForm } from "react-hook-form";
 import useUserStore from "../../../store/user/user.store";
 import { FormInput } from "../../inputs";
 import { Button } from "../../buttons";
-
-interface SignInFormData {
-  userName: string;
-  password: string;
-  [key: string]: unknown; // Firma de índice que permite cualquier otra clave
-}
-interface SignInProps {
-  customClass?: string;
-}
+import { SignInFormData, SignInProps } from "./signin.interfaces";
+import { useSignIn, useVerify } from "../../../hooks/auth";
+import { useNavigate } from "react-router-dom";
 
 const SignIn: FC<SignInProps> = ({ customClass }) => {
+  // Hooks Forms
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
   } = useForm<SignInFormData>();
 
-  const user = useUserStore((state) => state.user);
+  const navigate = useNavigate();
 
-  const onSubmit = (data: SignInFormData) => {
-    console.log(data); // Aquí puedes manejar la lógica de enviar los datos al servidor
+  // Cusotm Hooks and States
+  const { signIn, isLoading } = useSignIn();
+  const { verify, isLoading: isVerifyLoading } = useVerify();
+  // Store
+  const { setUser, user } = useUserStore();
+
+  const signInUser = async (data: SignInFormData) => {
+    const { userName, password } = data;
+    try {
+      const response = await signIn(userName, password);
+
+      if (!response || !response.token) {
+        throw new Error("Token not received from signIn response");
+      }
+
+      // Almacenar el token en el estado global o en el almacenamiento local
+      const { user: currentUser, token } = response;
+
+      // Realizar la verificación
+      const verifyResponse = await verify(currentUser, token);
+
+      setUser({
+        ...user,
+        name: verifyResponse.user.name,
+        userName: verifyResponse.user.userName,
+        token: verifyResponse.token,
+        isVerify: true,
+      });
+
+      navigate("/");
+    } catch (error) {
+      console.error("SignIn failed:", error);
+    }
+  };
+  const onSubmit = async (data: SignInFormData) => {
+    signInUser(data);
   };
 
   useEffect(() => {
@@ -65,7 +93,11 @@ const SignIn: FC<SignInProps> = ({ customClass }) => {
           rules={{ required: "You must enter your password." }}
           errors={errors}
         />
-        <Button text="Sign in" type="submit" />
+        <Button
+          text="Sign in"
+          type="submit"
+          loading={isLoading || isVerifyLoading}
+        />
       </form>
     </div>
   );

@@ -1,11 +1,11 @@
 // Definimos los tipos de parámetros y respuestas para cada función de API
 
-export interface LoginParams {
+export interface SinginParams {
   userName: string;
   password: string;
 }
 
-export interface LoginResponse {
+export interface SinginResponse {
   user: {
     userName: string;
     name: string;
@@ -25,7 +25,10 @@ export interface SignupResponse {
 }
 
 export interface VerifyParams {
-  userName: string;
+  user: {
+    userName: string,
+    name: string,
+  };
   token: string;
 }
 

@@ -4,30 +4,22 @@ import { useForm } from "react-hook-form";
 import useUserStore from "../../../store/user/user.store";
 import { FormInput } from "../../inputs";
 import { Button } from "../../buttons";
-import { useSignuP } from "../../../hooks/auth";
-
-interface SignupFormData {
-  name: string;
-  email: string;
-  userName: string;
-  password: string;
-  [key: string]: unknown;
-}
-
-interface SignupProps {
-  customClass?: string;
-  callback: () => void;
-}
+import { useSignUp } from "../../../hooks/auth";
+import { SignupFormData, SignupProps } from "./signup.interfaces";
 
 const Signup: FC<SignupProps> = ({ customClass, callback }) => {
+  // Hook Forms
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignupFormData>();
 
-  const { signup, isLoading, isSuccess, isError } = useSignuP();
+  // Custom Hooks and States
+  const { signup, isLoading } = useSignUp();
   const { setUser, user } = useUserStore();
+
+  // Functions
   const onSubmit = async (data: SignupFormData) => {
     try {
       const response = await signup(

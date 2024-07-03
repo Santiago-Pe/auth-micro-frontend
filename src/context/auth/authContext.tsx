@@ -1,10 +1,10 @@
 import React, { createContext, ReactNode, useContext } from "react";
 import { useMutation } from "@tanstack/react-query"; // Importamos hook de mutación
-import { login, signup, verify } from "../../api/auth/authServices"; // Importamos las funciones de los servicios de autenticación
+import { signin, signup, verify } from "../../api/auth/authServices"; // Importamos las funciones de los servicios de autenticación
 import { AuthContextType } from "./authContext.types"; // Importamos los tipos del contexto de autenticación
 import {
-  LoginParams,
-  LoginResponse,
+  SinginParams,
+  SinginResponse,
   SignupParams,
   SignupResponse,
   VerifyParams,
@@ -19,8 +19,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   // Hooks de mutación para cada operación de autenticación
-  const loginMutation = useMutation<LoginResponse, Error, LoginParams>({
-    mutationFn: login, // Función de mutación para login
+  const signinMutation = useMutation<SinginResponse, Error, SinginParams>({
+    mutationFn: signin, // Función de mutación para login
   });
   const signupMutation = useMutation<SignupResponse, Error, SignupParams>({
     mutationFn: signup, // Función de mutación para signup
@@ -32,7 +32,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   // Proporciona los hooks de mutación como valor del contexto
   return (
     <AuthContext.Provider
-      value={{ loginMutation, signupMutation, verifyMutation }}
+      value={{ signinMutation, signupMutation, verifyMutation }}
     >
       {children} {/* Renderiza los componentes hijos */}
     </AuthContext.Provider>

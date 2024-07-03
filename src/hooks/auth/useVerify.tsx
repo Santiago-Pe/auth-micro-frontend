@@ -4,9 +4,12 @@ import { useAuth } from "../../context/auth/authContext";
 const useVerify = () => {
   const { verifyMutation } = useAuth();
 
-  const verify = async (userName: string, token: string) => {
+  const verify = async (
+    user: { userName: string; name: string },
+    token: string
+  ) => {
     try {
-      const data = await verifyMutation.mutateAsync({ userName, token });
+      const data = await verifyMutation.mutateAsync({ user, token });
       if (data.message === "Success") {
         console.log("Verification successful:", data);
       } else {

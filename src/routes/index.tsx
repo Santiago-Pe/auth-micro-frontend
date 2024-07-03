@@ -14,7 +14,8 @@ const createProtectedRoute = (
 ) => {
   return {
     path,
-    element: <ProtectedRoute path={path} element={element} />,
+    element: <ProtectedRoute path={path} />,
+    children: [{ path: path, element: element }],
   };
 };
 

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import styles from "./authPage.module.css";
 import { Button, SignIn, Signup } from "../../components";
+import useUserStore from "../../store/user/user.store";
 
 const AuthPage: React.FC = () => {
   const [activePanel, setActivePanel] = useState<"sign-in" | "sign-up">(
     "sign-in"
   );
-
+  const user = useUserStore((state) => state.user);
+  const isRegister = user.userName !== "";
   const handleToggle = () => {
     setActivePanel(activePanel === "sign-in" ? "sign-up" : "sign-in");
   };
@@ -28,9 +30,20 @@ const AuthPage: React.FC = () => {
             <Button secondary text="Sign In" onClick={handleToggle} />
           </div>
           <div className={`${styles.togglePanel} ${styles.toggleRight}`}>
-            <h1>Hello, Friend!</h1>
-            <p>Register with your personal details to use all site features</p>
-            <Button secondary text="Sign up" onClick={handleToggle} />
+            {isRegister ? (
+              <>
+                <h1>Your register was succes</h1>
+                <p>Your user name is: {user.userName}</p>
+              </>
+            ) : (
+              <>
+                <h1>Hello, Friend!</h1>
+                <p>
+                  Register with your personal details to use all site features
+                </p>
+                <Button secondary text="Sign up" onClick={handleToggle} />
+              </>
+            )}
           </div>
         </div>
       </div>

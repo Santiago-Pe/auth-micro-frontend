@@ -1,7 +1,7 @@
 import axiosInstance from '../axiosInstance';
 import {
-  LoginParams,
-  LoginResponse,
+  SinginParams,
+  SinginResponse,
   SignupParams,
   SignupResponse,
   VerifyParams,
@@ -9,8 +9,8 @@ import {
 } from './authTypes';
 
 // Función para realizar la solicitud de login
-export const login = async ({ userName, password }: LoginParams): Promise<LoginResponse> => {
-  const response = await axiosInstance.post<LoginResponse>('/login', { userName, password });
+export const signin = async ({ userName, password }: SinginParams): Promise<SinginResponse> => {
+  const response = await axiosInstance.post<SinginResponse>('/login', { userName, password });
   return response.data;
 };
 
@@ -21,7 +21,7 @@ export const signup = async ({ name, email, userName, password }: SignupParams):
 };
 
 // Función para realizar la solicitud de verificación
-export const verify = async ({ userName, token }: VerifyParams): Promise<VerifyResponse> => {
-  const response = await axiosInstance.post<VerifyResponse>('/verify', { userName, token });
+export const verify = async ({ user, token }: VerifyParams): Promise<VerifyResponse> => {
+  const response = await axiosInstance.post<VerifyResponse>('/verify', { user, token });
   return response.data;
 };

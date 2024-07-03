@@ -1,7 +1,7 @@
 import { UseMutationResult } from "@tanstack/react-query";
 import {
-  LoginParams,
-  LoginResponse,
+  SinginParams,
+  SinginResponse,
   SignupParams,
   SignupResponse,
   VerifyParams,
@@ -21,7 +21,7 @@ export type ExtendedMutationResult<TData, TError, TVariables> = UseMutationResul
 
 // Define el tipo para el contexto de autenticación
 export type AuthContextType = {
-  loginMutation: ExtendedMutationResult<LoginResponse, Error, LoginParams>; // Resultado de la mutación para login
+  signinMutation: ExtendedMutationResult<SinginResponse, Error, SinginParams>; // Resultado de la mutación para login
   signupMutation: ExtendedMutationResult<SignupResponse, Error, SignupParams>; // Resultado de la mutación para signup
   verifyMutation: ExtendedMutationResult<VerifyResponse, Error, VerifyParams>; // Resultado de la mutación para verify
 };

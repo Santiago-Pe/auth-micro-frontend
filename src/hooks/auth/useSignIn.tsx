@@ -3,12 +3,13 @@ import { storeToken } from "../../helpers/helpers";
 
 // Hook personalizado para realizar la operación de login
 const useSignIn = () => {
-  const { loginMutation } = useAuth();
+  const { signinMutation } = useAuth();
 
-  const login = async (userName: string, password: string) => {
+  const signIn = async (userName: string, password: string) => {
     try {
-      const data = await loginMutation.mutateAsync({ userName, password });
+      const data = await signinMutation.mutateAsync({ userName, password });
       storeToken(data.token);
+      return data;
     } catch (error) {
       console.error("Error during login:", error);
       throw error; // Throw error to be handled in the component
@@ -16,10 +17,10 @@ const useSignIn = () => {
   };
 
   return {
-    login,
-    isLoading: loginMutation.isPending,
-    isSuccess: loginMutation.isSuccess,
-    isError: loginMutation.isError,
+    signIn,
+    isLoading: signinMutation.isPending,
+    isSuccess: signinMutation.isSuccess,
+    isError: signinMutation.isError,
   };
 };
 
