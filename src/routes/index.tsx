@@ -1,27 +1,38 @@
-import React, { lazy } from "react";
-import { createBrowserRouter } from "react-router-dom";
+// src/routes/routes.tsx
+import React from "react";
+import { createBrowserRouter, RouteObject } from "react-router-dom";
 import authRoutes from "./auth/authRoutes";
 import errorRoutes from "./error/errorRoutes";
-import { Loadable, Layout } from "../components"; // Ensure correct import
+import { Layout } from "../components";
+import ProtectedRoute from "./protectedRoute/protectedRoute";
+import homeRoutes from "./home/homeRoutes";
 
-const HomePageComponent = (props: any) =>
-  Loadable({
-    component: lazy(() => import("../pages/home/homePage")),
-    ...props,
-  });
-const router = createBrowserRouter([
+// Función para crear rutas protegidas
+const createProtectedRoute = (
+  path: string | undefined,
+  element: React.ReactNode
+) => {
+  return {
+    path,
+    element: <ProtectedRoute path={path} element={element} />,
+  };
+};
+
+// Define tus rutas
+
+const routes: RouteObject[] = [
   {
     path: "/",
     element: <Layout />,
     children: [
-      {
-        index: true,
-        element: <HomePageComponent />,
-      },
+      createProtectedRoute(homeRoutes.path, homeRoutes.element),
       authRoutes,
       errorRoutes,
     ],
   },
-]);
+];
+
+// Crea tu enrutador principal usando `createBrowserRouter`
+const router = createBrowserRouter(routes);
 
 export default router;

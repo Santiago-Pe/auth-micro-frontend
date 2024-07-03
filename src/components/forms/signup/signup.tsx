@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import useUserStore from "../../../store/user/user.store";
 import { FormInput } from "../../inputs";
 import { Button } from "../../buttons";
-import { useSignUp } from "../../../hooks/auth";
+import { useSignuP } from "../../../hooks/auth";
 
 interface SignupFormData {
   name: string;
@@ -26,7 +26,7 @@ const Signup: FC<SignupProps> = ({ customClass, callback }) => {
     formState: { errors },
   } = useForm<SignupFormData>();
 
-  const { signup, isLoading, isSuccess, isError } = useSignUp();
+  const { signup, isLoading, isSuccess, isError } = useSignuP();
   const { setUser, user } = useUserStore();
   const onSubmit = async (data: SignupFormData) => {
     try {

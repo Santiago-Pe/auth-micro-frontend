@@ -1,3 +1,4 @@
-export * from './useSignin';
-export * from './useSignUp';
-export * from './useVerify';
+export { default as useSignIn } from './useSignIn';
+export { default as useSignuP } from './useSignUp';
+export { default as useVerify} from './useVerify';
+

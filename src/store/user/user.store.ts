@@ -10,7 +10,7 @@ const initialState: User = {
   name: '',
   userName: '',
   token: null,
-  logged: false,
+  isVerify: false,
 };
 
 const useUserStore = create<UserStoreState>((set) => ({

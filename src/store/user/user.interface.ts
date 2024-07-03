@@ -4,5 +4,5 @@ export default interface User {
     name: string;
     userName: string;
     token: string | null; 
-    logged: boolean
+    isVerify: boolean
 }

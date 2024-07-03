@@ -1,7 +1,7 @@
 import { useAuth } from "../../context/auth/authContext";
 
 // Hook personalizado para realizar la operación de verificación
-export const useVerify = () => {
+const useVerify = () => {
   const { verifyMutation } = useAuth();
 
   const verify = async (userName: string, token: string) => {
@@ -26,3 +26,5 @@ export const useVerify = () => {
     isError: verifyMutation.isError,
   };
 };
+
+export default useVerify;

@@ -1,7 +1,7 @@
 import { useAuth } from "../../context/auth/authContext";
 
 // Hook personalizado para realizar la operación de signup
-export const useSignUp = () => {
+const useSignUp = () => {
   const { signupMutation } = useAuth();
 
   const signup = async (
@@ -32,3 +32,5 @@ export const useSignUp = () => {
     isError: signupMutation.isError,
   };
 };
+
+export default useSignUp;
