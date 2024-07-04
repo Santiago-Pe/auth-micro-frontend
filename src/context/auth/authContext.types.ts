@@ -14,7 +14,7 @@ export type ExtendedMutationResult<TData, TError, TVariables> = UseMutationResul
   TError,
   TVariables
 > & {
-  isLoading: boolean;
+  //isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
 };

@@ -1,5 +1,4 @@
-import { FC } from "react";
-
+import React, { FC } from "react";
 const Header: FC = () => {
   return <header className="layout-header"></header>;
 };
